@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/urllib1.jpg">
 <meta property="og:image" content="http://yoursite.com/images/urllib2.jpg">
-<meta property="og:updated_time" content="2018-01-21T12:04:14.760Z">
+<meta property="og:updated_time" content="2018-01-21T14:01:13.227Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python中urllib模块相关函数运用">
 <meta name="twitter:description" content="urllib是利用一些web协议来从因特网、局域网、本地主机上下载数据。使用这个模块就无须用到httplib、ftplib和gopherlib这些模块，在python2中有urllib、urlparse、urllib2，以及其他的内容，在python3中，所有的这些类就整合在了urllib的单一包中。">
@@ -364,6 +364,9 @@
 <p>运行结果：<br><img src="/images/urllib2.jpg"></p>
 <h1 id="quote-和quote-plus"><a href="#quote-和quote-plus" class="headerlink" title="quote()和quote_plus()"></a>quote()和quote_plus()</h1><p>quote()函数用来获取URL的数据，并将其进行编码，使其可以用于URL字符串中。必须对某些不能打印或者不被web服务器作为有效URL接收的特殊字串进行转换,unquote()和unquote_plus()是对quote()和quote_plus()的解码。quote_plus在quote的基础上将空格转成‘+’<br>语法：quote(url,safe=’/‘)<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print <span class="string">"转码前的URL：%s 转码后的URL：%s"</span> %(url,urllib.quote(url))</span><br><span class="line">&gt;&gt;&gt; url1 = url + <span class="string">' '</span></span><br><span class="line">&gt;&gt;&gt; print <span class="string">"quote_plus转：转码前的URL：%s 转码后的URL：%s"</span> %(url1,ullib.quote(url</span><br><span class="line"><span class="number">1</span>))</span><br></pre></td></tr></table></figure></p>
 <p>运行结果：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; print <span class="string">"转码前的URL：%s 转码后的URL：%s"</span> %(url,urllib.quote(url))</span><br><span class="line">转码前的URL：http:<span class="comment">//localhost:4000/ 转码后的URL：http%3A//localhost%3A4000/</span></span><br><span class="line">quote_plus转：转码前的URL：http:<span class="comment">//localhost:4000/  转码后的URL：http%3A//localho</span></span><br><span class="line">st%<span class="number">3</span>A4000/%<span class="number">20</span></span><br></pre></td></tr></table></figure></p>
+<!-- UY BEGIN -->
+<p><div id="uyan_frame"></div></p>
+<p><script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2156358"></script><br><!-- UY END --></p>
 
       
     </div>
@@ -740,6 +743,14 @@
 
 
 
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2156358"></script>
+      <!-- UY END -->
+    
   
 
 
