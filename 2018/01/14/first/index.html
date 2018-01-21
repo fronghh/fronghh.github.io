@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="urllib是利用一些web协议来从因特网、局域网、本地主机上下载数据。使用这个模块就无须用到httplib、ftplib和gopherlib这些模块，在python2中有urllib、urlparse、urllib2，以及其他的内容，在python3中，所有的这些类就整合在了urllib的单一包中。 urlopen()urllib.urlopen()，URLopen（）打开一个给定的url字符串">
+<meta name="description" content="urllib是利用一些web协议来从因特网、局域网、本地主机上下载数据。使用这个模块就无须用到httplib、ftplib和gopherlib这些模块，在python2中有urllib、urlparse、urllib2，以及其他的内容，在python3中，所有的这些类就整合在了urllib的单一包中。">
 <meta name="keywords" content="urllib">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python中urllib模块相关函数运用">
 <meta property="og:url" content="http://yoursite.com/2018/01/14/first/index.html">
 <meta property="og:site_name" content="F20ng">
-<meta property="og:description" content="urllib是利用一些web协议来从因特网、局域网、本地主机上下载数据。使用这个模块就无须用到httplib、ftplib和gopherlib这些模块，在python2中有urllib、urlparse、urllib2，以及其他的内容，在python3中，所有的这些类就整合在了urllib的单一包中。 urlopen()urllib.urlopen()，URLopen（）打开一个给定的url字符串">
+<meta property="og:description" content="urllib是利用一些web协议来从因特网、局域网、本地主机上下载数据。使用这个模块就无须用到httplib、ftplib和gopherlib这些模块，在python2中有urllib、urlparse、urllib2，以及其他的内容，在python3中，所有的这些类就整合在了urllib的单一包中。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/urllib1.jpg">
 <meta property="og:image" content="http://yoursite.com/images/urllib2.jpg">
-<meta property="og:updated_time" content="2018-01-21T09:03:33.605Z">
+<meta property="og:updated_time" content="2018-01-21T12:04:14.760Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python中urllib模块相关函数运用">
-<meta name="twitter:description" content="urllib是利用一些web协议来从因特网、局域网、本地主机上下载数据。使用这个模块就无须用到httplib、ftplib和gopherlib这些模块，在python2中有urllib、urlparse、urllib2，以及其他的内容，在python3中，所有的这些类就整合在了urllib的单一包中。 urlopen()urllib.urlopen()，URLopen（）打开一个给定的url字符串">
+<meta name="twitter:description" content="urllib是利用一些web协议来从因特网、局域网、本地主机上下载数据。使用这个模块就无须用到httplib、ftplib和gopherlib这些模块，在python2中有urllib、urlparse、urllib2，以及其他的内容，在python3中，所有的这些类就整合在了urllib的单一包中。">
 <meta name="twitter:image" content="http://yoursite.com/images/urllib1.jpg">
 
 
@@ -356,7 +356,7 @@
       
 
       
-        <p>urllib是利用一些web协议来从因特网、局域网、本地主机上下载数据。使用这个模块就无须用到httplib、ftplib和gopherlib这些模块，在python2中有urllib、urlparse、urllib2，以及其他的内容，在python3中，所有的这些类就整合在了urllib的单一包中。</p>
+        <p>urllib是利用一些web协议来从因特网、局域网、本地主机上下载数据。使用这个模块就无须用到httplib、ftplib和gopherlib这些模块，在python2中有urllib、urlparse、urllib2，以及其他的内容，在python3中，所有的这些类就整合在了urllib的单一包中。<br><a id="more"></a></p>
 <h1 id="urlopen"><a href="#urlopen" class="headerlink" title="urlopen()"></a>urlopen()</h1><p>urllib.urlopen()，URLopen（）打开一个给定的url字符串表示的web连接，并返回文件类型的对象。在3.0中移除了这个函数<br>语法：urlopen(urlstr,postQueryData=None)<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line">url = <span class="string">"http://www.f20ng.cn/"</span></span><br><span class="line">f = urllib.urlopen(url)</span><br><span class="line">#str1 = f.read()#读取所有的字节</span><br><span class="line">#print <span class="string">"str1: %s"</span> %(str1)</span><br><span class="line">str2 = f.readline()#读取一行</span><br><span class="line">print <span class="string">"str2: %s"</span> %(str2)</span><br><span class="line">print <span class="string">"文件句柄：%s"</span> %(f.fileno())#获取文件句柄</span><br><span class="line">print <span class="string">"获得MIME头文件:%s"</span> %(f.info())</span><br><span class="line">print <span class="string">"真正的URL：%s"</span> %(f.geturl())</span><br><span class="line">f.close()#关闭f的url连接</span><br></pre></td></tr></table></figure></p>
 <p>运行结果：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; f = urllib.urlopen(url)</span><br><span class="line">&gt;&gt;&gt; str2 = f.readline()</span><br><span class="line">&gt;&gt;&gt; print <span class="string">"str2: %s"</span> %(str2)</span><br><span class="line">str2: &lt;!DOCTYPE html&gt;</span><br><span class="line">&gt;&gt;&gt; print <span class="string">"文件句柄：%s"</span> %(f.fileno())</span><br><span class="line">文件句柄：<span class="number">488</span></span><br><span class="line">&gt;&gt;&gt; f = urllib.urlopen(url)</span><br><span class="line">&gt;&gt;&gt; print <span class="string">"真正的URL：%s"</span> %(f.geturl())</span><br><span class="line">真正的URL：http:<span class="comment">//localhost:4000/</span></span><br></pre></td></tr></table></figure></p>
 <p>获取MIME头文件<br><img src="/images/urllib1.jpg"></p>
