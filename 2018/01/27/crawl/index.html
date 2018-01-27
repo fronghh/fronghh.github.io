@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python,web crawl," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="为什么需要web crawl这篇写的是一个web的爬虫，这个爬虫可以下载整个网站，让这整个网站静态的存在于我们的电脑，又可以在没网的时候方便访问，尤其是一些关于学习的网站。在没网的时候想学习，但是又苦于没有网络，那么这个就是一个很好的方法。在有网的地方使用这个爬虫将整个网站下载下来就好啦啦啦啦啦~~~~~">
+<meta name="keywords" content="python,web crawl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个小小 web crawl~_~">
+<meta property="og:url" content="http://yoursite.com/2018/01/27/crawl/index.html">
+<meta property="og:site_name" content="F20ng">
+<meta property="og:description" content="为什么需要web crawl这篇写的是一个web的爬虫，这个爬虫可以下载整个网站，让这整个网站静态的存在于我们的电脑，又可以在没网的时候方便访问，尤其是一些关于学习的网站。在没网的时候想学习，但是又苦于没有网络，那么这个就是一个很好的方法。在有网的地方使用这个爬虫将整个网站下载下来就好啦啦啦啦啦~~~~~">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-27T07:42:02.901Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一个小小 web crawl~_~">
+<meta name="twitter:description" content="为什么需要web crawl这篇写的是一个web的爬虫，这个爬虫可以下载整个网站，让这整个网站静态的存在于我们的电脑，又可以在没网的时候方便访问，尤其是一些关于学习的网站。在没网的时候想学习，但是又苦于没有网络，那么这个就是一个很好的方法。在有网的地方使用这个爬虫将整个网站下载下来就好啦啦啦啦啦~~~~~">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/27/crawl/"/>
+
+
+
+
+
+  <title>一个小小 web crawl~_~ | F20ng</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">F20ng</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/27/crawl/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="f20ng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/111.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="F20ng">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">一个小小 web crawl~_~</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-27T13:53:22+08:00">
+                2018-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/27/crawl/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/01/27/crawl/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="为什么需要web-crawl"><a href="#为什么需要web-crawl" class="headerlink" title="为什么需要web crawl"></a>为什么需要web crawl</h1><p>这篇写的是一个web的爬虫，这个爬虫可以下载整个网站，让这整个网站静态的存在于我们的电脑，又可以在没网的时候方便访问，尤其是一些关于学习的网站。在没网的时候想学习，但是又苦于没有网络，那么这个就是一个很好的方法。在有网的地方使用这个爬虫将整个网站下载下来就好啦啦啦啦啦<del>~</del>~~~~<br><a id="more"></a></p>
+<h1 id="web-crawl代码"><a href="#web-crawl代码" class="headerlink" title="web crawl代码"></a>web crawl代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/python</span><br><span class="line"># -*- coding: UTF<span class="number">-8</span> -*-</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> urlparse</span><br><span class="line">from htmllib <span class="keyword">import</span> HTMLParser</span><br><span class="line"><span class="keyword">import</span> httplib</span><br><span class="line"><span class="keyword">import</span> cStringIO</span><br><span class="line"><span class="keyword">import</span> formatter</span><br><span class="line"></span><br><span class="line">class Retriever(object):</span><br><span class="line">    __slots__ = ('url','file')</span><br><span class="line">    def __init__(self,url):</span><br><span class="line">        self.url,self.file = self.get_file(url)</span><br><span class="line">    def get_file(self,url):</span><br><span class="line">        parsed = urlparse.urlparse(url)</span><br><span class="line">        host = parsed.netloc.split(<span class="string">'@'</span>)[<span class="number">-1</span>].split(<span class="string">':'</span>)[<span class="number">0</span>]#获取域名，除去http:<span class="comment">//等前缀</span></span><br><span class="line">        filepath = <span class="string">"%s%s"</span> %(host,parsed.path)#parsed.path是url中后面的路径</span><br><span class="line">        #判断是否存在该路径</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.splitext(parsed.path)[<span class="number">1</span>]:</span><br><span class="line">            filepath  = os.path.join(filepath,<span class="string">"index.html"</span>)#如果后面不存在路径就将后面补上默认的路径</span><br><span class="line">        dirname = os.path.dirname(filepath)#输出文件的路径，如果只有文件则输出<span class="literal">NULL</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.isdir(dirname):#判断文件是否是一个文件夹</span><br><span class="line">            <span class="keyword">if</span> os.path.exists(dirname):</span><br><span class="line">                os.unlink(dirname)</span><br><span class="line">            os.makedirs(dirname)</span><br><span class="line">        <span class="keyword">return</span> url,filepath</span><br><span class="line"></span><br><span class="line">    def download_file(self):</span><br><span class="line">        retval = urllib.urlretrieve(self.url,self.file)#解析HTML文件到file里面</span><br><span class="line">        <span class="keyword">return</span> retval</span><br><span class="line"></span><br><span class="line">    def parse_link(self):#读取在当前页面中含有的链接</span><br><span class="line">        f = open(self.file,<span class="string">'r'</span>)</span><br><span class="line">        data = f.read()</span><br><span class="line">        f.close()</span><br><span class="line">        parser = HTMLParser(formatter.AbstractFormatter(formatter.DumbWriter(cStringIO.StringIO())))</span><br><span class="line">        parser.feed(data)</span><br><span class="line">        parser.close()</span><br><span class="line">        <span class="keyword">return</span> parser.anchorlist</span><br><span class="line"></span><br><span class="line">class  Crawler(object):</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    def __init__(self,url):</span><br><span class="line">        self.q = [url]</span><br><span class="line">        self.seen = <span class="built_in">set</span>()</span><br><span class="line">        parsed = urlparse.urlparse(url)</span><br><span class="line">        host = parsed.netloc.split(<span class="string">'@'</span>)[<span class="number">-1</span>].split(<span class="string">':'</span>)[<span class="number">0</span>]</span><br><span class="line">        self.dom = <span class="string">'.'</span>.join(host.split(<span class="string">'.'</span>)[<span class="number">-2</span>:])</span><br><span class="line"></span><br><span class="line">    def get_page(self,url,media=False):</span><br><span class="line">        r = Retriever(url)</span><br><span class="line">        fname = r.download_file()[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">if</span> fname[<span class="number">0</span>] == <span class="string">'*'</span>:</span><br><span class="line">            print fname,'……skipping parse'</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        Crawler.count += <span class="number">1</span></span><br><span class="line">        print '\n(', Crawler.count,')'</span><br><span class="line">        print 'URL:',url</span><br><span class="line">        print 'FILE:',fname</span><br><span class="line">        self.seen.add(url)</span><br><span class="line">        ftype = os.path.splitext(fname)[<span class="number">1</span>]#获取文件的后缀名</span><br><span class="line">        if ftype not in ('.htm','.html'):</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> link in r.parse_link():</span><br><span class="line">            if link.startswith('mailto'):#检测字符串是否是以mailto开头</span><br><span class="line">                print '...discarded,mailto link'</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> media:#判断文件是否是一个音频文件</span><br><span class="line">                ftype = os.path.splitext(link)[<span class="number">1</span>]</span><br><span class="line">                if ftype in ('.mp3','.mp4','mv4','.wav'):</span><br><span class="line">                    print '...discarded,media file'</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> link.startswith(<span class="string">"http://"</span>):</span><br><span class="line">                link = urlparse.urljoin(url,link)</span><br><span class="line">            print <span class="string">'*'</span>,link,</span><br><span class="line">            <span class="keyword">if</span> link <span class="keyword">not</span> in self.seen:#判断该url是否在url的集合里面，如果不在搜索的集合里执行</span><br><span class="line">                <span class="keyword">if</span> self.dom <span class="keyword">not</span> in link:#判断link是否是刚开始输入的url，如果是执行，如果不是则执行<span class="keyword">else</span></span><br><span class="line">                    print '... discarded,not in domain'</span><br><span class="line">                <span class="keyword">else</span>:#判断link是否在q的这个<span class="built_in">list</span>当中</span><br><span class="line">                    <span class="keyword">if</span> link <span class="keyword">not</span> in self.q:</span><br><span class="line">                        self.q.append(link)#如果不在q的<span class="built_in">list</span>当中，就将link添加到q的末尾</span><br><span class="line">                        print '... new,added to Q'</span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        print '... discarded,already in Q'</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print '... discarded,already processed'</span><br><span class="line">    def go(self,media = False):</span><br><span class="line">        <span class="keyword">while</span> self.q:#循环读取q <span class="built_in">list</span>当中的url</span><br><span class="line">            url = self.q.pop()#pop()函数用于移除在<span class="built_in">list</span>当中的一个元素，默认的为最后一个元素</span><br><span class="line">            self.get_page(url,media)</span><br><span class="line">def main():</span><br><span class="line">    <span class="keyword">if</span> len(sys.argv)&gt;<span class="number">1</span>:</span><br><span class="line">        url = sys.argv[<span class="number">1</span>]#获取输入的第二个参数</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            url = raw_input('Enter starting URL:')</span><br><span class="line">        except:</span><br><span class="line">            url = <span class="string">''</span></span><br><span class="line">    if not url:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">        if not url.startswith('http://')and not url.startswith('ftp://'):</span><br><span class="line">            url = 'http://%s' % url</span><br><span class="line">        robot = Crawler(url)</span><br><span class="line">        robot.go()</span><br><span class="line"></span><br><span class="line">    if __name__ == '__main__':</span><br><span class="line">        main()</span><br></pre></td></tr></table></figure>
+<h1 id="代码中的相关函数解释"><a href="#代码中的相关函数解释" class="headerlink" title="代码中的相关函数解释"></a>代码中的相关函数解释</h1><h2 id="os-path模块中的相关函数"><a href="#os-path模块中的相关函数" class="headerlink" title="os.path模块中的相关函数"></a>os.path模块中的相关函数</h2><p>os.path.splitext()<br>…<br>分离文件名与扩展名；默认返回(fname,fextension)元组，可做分片操作。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; file = <span class="string">"hhaha.html"</span></span><br><span class="line">&gt;&gt;&gt; f = os.path.splitext(file)</span><br><span class="line">&gt;&gt;&gt; print f[<span class="number">0</span>]</span><br><span class="line">hhaha</span><br><span class="line">&gt;&gt;&gt; print f[<span class="number">1</span>]</span><br><span class="line">.html</span><br></pre></td></tr></table></figure></p>
+<p>os.path.join()<br>…<br>将多个路径组合起来<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; res = os.path.join(<span class="string">"1"</span>,<span class="string">"2.txt"</span>)</span><br><span class="line">&gt;&gt;&gt; print res</span><br><span class="line"><span class="number">1</span>\<span class="number">2.</span>txt</span><br></pre></td></tr></table></figure></p>
+<p>os.path.dirname()<br>…<br>输出文件的路径，如果是只有文件则输出NULL<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; file1 = <span class="string">"c://1.txt"</span></span><br><span class="line">&gt;&gt;&gt; print os.path.dirname(file1)</span><br><span class="line">c:<span class="comment">//</span></span><br><span class="line">&gt;&gt;&gt; file2 = <span class="string">"1.txt"</span></span><br><span class="line">&gt;&gt;&gt; print os.path.dirname(file2)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>os.path.isdir()<br>…<br>判断这个路径是否是一个文件夹<br>os.path.exists()<br>…<br>判断是否存在于该路径<br>os.unlink(path)<br>…<br>删除该路径<br>os.makedirs()<br>…<br>相反的创建该路径</p>
+<h2 id="set"><a href="#set" class="headerlink" title="set()"></a>set()</h2><p>set是一个类，该类的对象可以对集合进行删除、添加。对象名.add(添加的元素)；对象名.update(str)：对集合进行更新，当集合中之前已经存在了相同的时候就不添加，否则添加；对象名.remove(str)：删除该集合中的str元素<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = <span class="built_in">set</span>(<span class="string">"hfr"</span>)</span><br><span class="line">&gt;&gt;&gt; a.add(<span class="string">"hahha"</span>)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">set(['h', 'r', 'hahha', 'f'])</span><br><span class="line">&gt;&gt;&gt; a.update(<span class="string">"haha1"</span>)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">set(['a', 'hahha', 'h', 'f', '1', 'r'])</span><br><span class="line">&gt;&gt;&gt; a.remove(<span class="string">"hahha"</span>)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line"><span class="built_in">set</span>([<span class="string">'a'</span>, <span class="string">'h'</span>, <span class="string">'f'</span>, <span class="string">'1'</span>, <span class="string">'r'</span>])</span><br></pre></td></tr></table></figure></p>
+<h2 id="startswith"><a href="#startswith" class="headerlink" title="startswith()"></a>startswith()</h2><p>startswith()函数是判断一个字符串是否是以指定的字符串开头的<br>startswith(str,begin,end)：begin是字符串的开查找的位置，end是查找字符串的结束位置<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; str=<span class="string">"1234567"</span></span><br><span class="line">&gt;&gt;&gt; str.startswith(<span class="string">"1"</span>)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; str.startswith(<span class="string">"2"</span>)</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; str.startswith(<span class="string">"2"</span>,<span class="number">0</span>,len(str))</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; str.startswith(<span class="string">"2"</span>,<span class="number">0</span>,<span class="number">3</span>)</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; str.startswith(<span class="string">"2"</span>,<span class="number">1</span>,<span class="number">3</span>)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; str.startswith(<span class="string">"2"</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">False</span><br></pre></td></tr></table></figure></p>
+<h2 id="append"><a href="#append" class="headerlink" title="append()"></a>append()</h2><p>append()函数是添加一个元素到list，默认是添加到末尾；以及与extend()函数的区别<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">&gt;&gt;&gt; arr.append(<span class="number">77</span>)</span><br><span class="line">&gt;&gt;&gt; arr</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">77</span>]</span><br><span class="line">&gt;&gt;&gt; arr.append([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line">&gt;&gt;&gt; arr</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">77</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]]</span><br><span class="line">&gt;&gt;&gt; arr.extend([<span class="number">8</span>,<span class="number">9</span>])</span><br><span class="line">&gt;&gt;&gt; arr</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">77</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="number">8</span>, <span class="number">9</span>]</span><br></pre></td></tr></table></figure></p>
+<h2 id="pop"><a href="#pop" class="headerlink" title="pop()"></a>pop()</h2><p>函数用于移除在list当中的最后的一个元素<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; arr</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">77</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line">&gt;&gt;&gt; arr.pop()</span><br><span class="line"><span class="number">9</span></span><br><span class="line">&gt;&gt;&gt; arr</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">77</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="number">8</span>]</span><br></pre></td></tr></table></figure></p>
+<p><div id="container"></div></p>
+<p><link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css"></p>
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  // 可选。默认为 location.href  比如我本人的就删除了
+  owner: 'fronghh',              //比如我的叫anTtutu
+  repo: 'fronghh.github.io',                 //比如我的叫anTtutu.github.io
+  oauth: {
+    client_id: 'b62cf9a637e3a1589c08',          //比如我的828***********
+    client_secret: '4122330b204176a6d5890059b94f155d80267560',  //比如我的49e************************
+  },
+})
+gitment.render('container')
+</script>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/web-crawl/" rel="tag"># web crawl</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/14/first/" rel="next" title="python中urllib模块相关函数运用">
+                <i class="fa fa-chevron-left"></i> python中urllib模块相关函数运用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/111.jpg"
+                alt="f20ng" />
+            
+              <p class="site-author-name" itemprop="name">f20ng</p>
+              <p class="site-description motion-element" itemprop="description">在这个流行告别的世界里 愿有人为你停留</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://120.24.66.91/" title="Contrail ・ε・" target="_blank">Contrail ・ε・</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/feaa829265b6" title="_codelover" target="_blank">_codelover</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.xianyusec.com/" title="咸鱼" target="_blank">咸鱼</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么需要web-crawl"><span class="nav-number">1.</span> <span class="nav-text">为什么需要web crawl</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#web-crawl代码"><span class="nav-number">2.</span> <span class="nav-text">web crawl代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码中的相关函数解释"><span class="nav-number">3.</span> <span class="nav-text">代码中的相关函数解释</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#os-path模块中的相关函数"><span class="nav-number">3.1.</span> <span class="nav-text">os.path模块中的相关函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set"><span class="nav-number">3.2.</span> <span class="nav-text">set()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#startswith"><span class="nav-number">3.3.</span> <span class="nav-text">startswith()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#append"><span class="nav-number">3.4.</span> <span class="nav-text">append()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pop"><span class="nav-number">3.5.</span> <span class="nav-text">pop()</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">f20ng</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v="></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v="></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v="></script>
+<script type="text/javascript" src="/js/src/post-details.js?v="></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v="></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/01/27/crawl/';
+          this.page.identifier = '2018/01/27/crawl/';
+          this.page.title = '一个小小 web crawl~_~';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
