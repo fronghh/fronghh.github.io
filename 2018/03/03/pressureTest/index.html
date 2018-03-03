@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python,多线程,压力测试," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么是压力测试压力测试（Stress Test），也称为强度测试、负载测试。 压力测试的意义对系统不断施加压力的测试，是通过确定一个系统的瓶颈或者不能接收的性能点，来获得系统能提供的最大服务级别的测试。例如测试一个 Web 站点在大量的负荷下，何时系统的响应会退化或失败。压力测试是模拟实际应用的软硬件环境及用户使用过程的系统负荷，长时间或超大负荷地运行测试软件，来测试被测系统的性能、可靠性、稳定性">
+<meta name="keywords" content="python,多线程,压力测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pressureTest">
+<meta property="og:url" content="http://yoursite.com/2018/03/03/pressureTest/index.html">
+<meta property="og:site_name" content="F20ng">
+<meta property="og:description" content="什么是压力测试压力测试（Stress Test），也称为强度测试、负载测试。 压力测试的意义对系统不断施加压力的测试，是通过确定一个系统的瓶颈或者不能接收的性能点，来获得系统能提供的最大服务级别的测试。例如测试一个 Web 站点在大量的负荷下，何时系统的响应会退化或失败。压力测试是模拟实际应用的软硬件环境及用户使用过程的系统负荷，长时间或超大负荷地运行测试软件，来测试被测系统的性能、可靠性、稳定性">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-03T15:22:02.119Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pressureTest">
+<meta name="twitter:description" content="什么是压力测试压力测试（Stress Test），也称为强度测试、负载测试。 压力测试的意义对系统不断施加压力的测试，是通过确定一个系统的瓶颈或者不能接收的性能点，来获得系统能提供的最大服务级别的测试。例如测试一个 Web 站点在大量的负荷下，何时系统的响应会退化或失败。压力测试是模拟实际应用的软硬件环境及用户使用过程的系统负荷，长时间或超大负荷地运行测试软件，来测试被测系统的性能、可靠性、稳定性">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/03/pressureTest/"/>
+
+
+
+
+
+  <title>pressureTest | F20ng</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">F20ng</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/03/pressureTest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="f20ng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/111.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="F20ng">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">pressureTest</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T22:02:30+08:00">
+                2018-03-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/03/pressureTest/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/03/03/pressureTest/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="什么是压力测试"><a href="#什么是压力测试" class="headerlink" title="什么是压力测试"></a>什么是压力测试</h1><p>压力测试（Stress Test），也称为强度测试、负载测试。</p>
+<h1 id="压力测试的意义"><a href="#压力测试的意义" class="headerlink" title="压力测试的意义"></a>压力测试的意义</h1><p>对系统不断施加压力的测试，是通过确定一个系统的瓶颈或者不能接收的性能点，来获得系统能提供的最大服务级别的测试。例如测试一个 Web 站点在大量的负荷下，何时系统的响应会退化或失败。压力测试是模拟实际应用的软硬件环境及用户使用过程的系统负荷，长时间或超大负荷地运行测试软件，来测试被测系统的性能、可靠性、稳定性等<br><a id="more"></a></p>
+<h1 id="压力测试代码"><a href="#压力测试代码" class="headerlink" title="压力测试代码"></a>压力测试代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">from optparse <span class="keyword">import</span> OptionParser</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line">from time <span class="keyword">import</span> sleep,ctime</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def sendData(url,data):</span><br><span class="line">    <span class="keyword">if</span> data==[]:</span><br><span class="line">        res = requests.get(url)</span><br><span class="line">        print res.text</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        data_dict = &#123;'username':data[0],'password':data[1]&#125;</span><br><span class="line">        res = requests.post(url = url,data = data_dict)</span><br><span class="line">        <span class="keyword">if</span> res.status_code == <span class="number">200</span>:</span><br><span class="line">            print 'login success'</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print 'login faile',ctime()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ ==<span class="string">"__main__"</span>:</span><br><span class="line">    usage = 'Usage:%prog -u &lt;ulr&gt; -f &lt;filename&gt;'</span><br><span class="line">    parse = OptionParser(usage, version='%prog v1.0')</span><br><span class="line">    parse.add_option('-u', "--url", type='string', dest='url', help='please input correct url')</span><br><span class="line">    parse.add_option('-a', '--name', dest='username_file', help='please input your postdata username')</span><br><span class="line">    parse.add_option('-p', '--password', dest='password_file', help='please input your postdata password')</span><br><span class="line">    (options, args) = parse.parse_args()</span><br><span class="line">    <span class="keyword">if</span> options.url == None:</span><br><span class="line">        print parse.usage</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        url = options.url</span><br><span class="line">        userNamePath = options.username_file</span><br><span class="line">        passwordPath = options.password_file</span><br><span class="line">        data = []</span><br><span class="line">        n=<span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> userNamePath!=None <span class="keyword">and</span> passwordPath!=None:</span><br><span class="line">            with open(userNamePath, <span class="string">'r'</span>) as userf:</span><br><span class="line">                with open(passwordPath, <span class="string">'r'</span>) as passwdf:</span><br><span class="line">                    <span class="keyword">for</span> user0 in userf:</span><br><span class="line">                        <span class="keyword">for</span> passwd0 in passwdf:</span><br><span class="line">                            data.append([user0, passwd0])</span><br><span class="line">                            n = n + <span class="number">1</span></span><br><span class="line">                        passwdf.seek(<span class="number">0</span>)</span><br><span class="line">        threads = []</span><br><span class="line">        <span class="keyword">for</span> i in range(n):</span><br><span class="line">            t = threading.Thread(target=sendData, args=(url,data[i],))</span><br><span class="line">            threads.append(t)</span><br><span class="line">        <span class="keyword">for</span> t in threads:</span><br><span class="line">            t.start()</span><br></pre></td></tr></table></figure>
+<h1 id="代码详解"><a href="#代码详解" class="headerlink" title="代码详解"></a>代码详解</h1><h2 id="代码整体解读"><a href="#代码整体解读" class="headerlink" title="代码整体解读"></a>代码整体解读</h2><p>首先如果是get型的访问的话那么就可以直接接‘-u xxx’这一个url就行了，但是如果是post型的访问时就可能需要两个传入的数据，一个是‘-a xxx’的username，还有一个就是‘-p xxx’中的password，这两个参数都是通过文件的形式读取的，因为在压力测试的时候应该不只有一个用户登录，所以最好是以文件的形式读入。在将用户名和密码组合后为一个二维的数组，将数组传入到sendData这个函数当中进行登录，当然这个登录是通过多线程来完成的，这样才能同时进行访问（最关键位置），起到压力测试的作用。</p>
+<h2 id="关键代码分析"><a href="#关键代码分析" class="headerlink" title="关键代码分析"></a>关键代码分析</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">parse = OptionParser(usage, version='%prog v1.0')</span><br><span class="line">parse.add_option('-u', "--url", type='string', dest='url', help='please input correct url')</span><br><span class="line">parse.add_option('-a', '--name', dest='username_file', help='please input your postdata username')</span><br><span class="line">parse.add_option('-p', '--password', dest='password_file', help='please input your postdata password')</span><br></pre></td></tr></table></figure>
+<p>获取传入的参数url,放入username的文件，放入password的文件<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">with open(userNamePath, 'r') as userf:</span><br><span class="line">    with open(passwordPath, 'r') as passwdf:</span><br><span class="line">        <span class="keyword">for</span> user0 in userf:</span><br><span class="line">            <span class="keyword">for</span> passwd0 in passwdf:</span><br><span class="line">                data.append([user0, passwd0])</span><br><span class="line">                n = n + <span class="number">1</span></span><br><span class="line">            passwdf.seek(<span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<p>将username和password组合成一个二维数组，作为一个post的数据。注意这个地方一定要用seek(0)，不然外层循环无法循环<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">data = []</span><br><span class="line">with open('C:\Users\delete\Desktop\haha.txt', 'r') as userf:</span><br><span class="line">    with open('C:\Users\delete\Desktop\wawa.txt', 'r') as passwdf:</span><br><span class="line">        <span class="keyword">for</span> user0 in userf:</span><br><span class="line">            <span class="keyword">for</span> passwd0 in passwdf:</span><br><span class="line">                data.append([user0, passwd0])</span><br><span class="line">            <span class="meta">#passwdf.seek(0)</span></span><br><span class="line">print data</span><br></pre></td></tr></table></figure></p>
+<p>这个注释掉seek()的运行结果<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[['1\n', 'a\n'], ['1\n', 'b\n'], ['1\n', 'c']]</span><br><span class="line"></span><br><span class="line">Process finished with <span class="built_in">exit</span> code <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">data = []</span><br><span class="line">with open('C:\Users\delete\Desktop\haha.txt', 'r') as userf:</span><br><span class="line">    with open('C:\Users\delete\Desktop\wawa.txt', 'r') as passwdf:</span><br><span class="line">        <span class="keyword">for</span> user0 in userf:</span><br><span class="line">            <span class="keyword">for</span> passwd0 in passwdf:</span><br><span class="line">                data.append([user0, passwd0])</span><br><span class="line">            passwdf.seek(<span class="number">0</span>)</span><br><span class="line">print data</span><br></pre></td></tr></table></figure>
+<p>没注释的运行结果<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[['1\n', 'a\n'], ['1\n', 'b\n'], ['1\n', 'c'], ['2\n', 'a\n'], ['2\n', 'b\n'], ['2\n', 'c'], ['3', 'a\n'], ['3', 'b\n'], ['3', 'c']]</span><br><span class="line"></span><br><span class="line">Process finished with <span class="built_in">exit</span> code <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">threads = []</span><br><span class="line"><span class="keyword">for</span> i in range(n):</span><br><span class="line">    t = threading.Thread(target=sendData, args=(url,data[i],))</span><br><span class="line">    threads.append(t)</span><br><span class="line"><span class="keyword">for</span> t in threads:</span><br><span class="line">    t.start()</span><br></pre></td></tr></table></figure>
+<p>这个地方就是多线程的关键，Thread产生一个新线程，并执行sendData这个函数，最后使用t.start()同时触发线程，使得所有的用户都可以在同一时间进行登录</p>
+<p><div id="container"></div></p>
+<p><link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css"></p>
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  // 可选。默认为 location.href  比如我本人的就删除了
+  owner: 'fronghh',              //比如我的叫anTtutu
+  repo: 'fronghh.github.io',                 //比如我的叫anTtutu.github.io
+  oauth: {
+    client_id: 'b62cf9a637e3a1589c08',          //比如我的828***********
+    client_secret: '4122330b204176a6d5890059b94f155d80267560',  //比如我的49e************************
+  },
+})
+gitment.render('container')
+</script>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
+          
+            <a href="/tags/压力测试/" rel="tag"># 压力测试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/27/crawl/" rel="next" title="一个小小 web 爬虫~_~">
+                <i class="fa fa-chevron-left"></i> 一个小小 web 爬虫~_~
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/111.jpg"
+                alt="f20ng" />
+            
+              <p class="site-author-name" itemprop="name">f20ng</p>
+              <p class="site-description motion-element" itemprop="description">在这个流行告别的世界里 愿有人为你停留</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://120.24.66.91/" title="Contrail ・ε・" target="_blank">Contrail ・ε・</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/feaa829265b6" title="_codelover" target="_blank">_codelover</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.xianyusec.com/" title="咸鱼" target="_blank">咸鱼</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是压力测试"><span class="nav-number">1.</span> <span class="nav-text">什么是压力测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#压力测试的意义"><span class="nav-number">2.</span> <span class="nav-text">压力测试的意义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#压力测试代码"><span class="nav-number">3.</span> <span class="nav-text">压力测试代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码详解"><span class="nav-number">4.</span> <span class="nav-text">代码详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码整体解读"><span class="nav-number">4.1.</span> <span class="nav-text">代码整体解读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键代码分析"><span class="nav-number">4.2.</span> <span class="nav-text">关键代码分析</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">f20ng</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v="></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v="></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v="></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v="></script>
+<script type="text/javascript" src="/js/src/post-details.js?v="></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v="></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/03/03/pressureTest/';
+          this.page.identifier = '2018/03/03/pressureTest/';
+          this.page.title = 'pressureTest';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
